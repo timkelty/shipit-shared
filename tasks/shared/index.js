@@ -1,12 +1,17 @@
 var registerTask = require('../../lib/register-task');
 
+/**
+ * Symlink shared files and directories.
+ * - shared:create-remote-dirs
+ * - shared:link
+ */
+
 module.exports = function (gruntOrShipit) {
   require('./create-dirs')(gruntOrShipit);
-  require('./link-dirs')(gruntOrShipit);
-  require('./link-files')(gruntOrShipit);
+  require('./link')(gruntOrShipit);
 
   registerTask(gruntOrShipit, 'shared', [
-    'shared:create-remote-dirs',
+    'shared:create-dirs',
     'shared:link',
   ]);
 

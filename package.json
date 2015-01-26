@@ -1,7 +1,6 @@
 {
   "name": "shipit-shared",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "directories": {
     "test": "test"
@@ -18,7 +17,10 @@
     "deploy",
     "task"
   ],
-  "author": "Tim Kelty <timkelty@gmail.com>",
+  "author": {
+    "name": "Tim Kelty",
+    "email": "timkelty@gmail.com"
+  },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/timkelty/shipit-shared/issues"
@@ -42,5 +44,10 @@
     "moment": "^2.9.0",
     "path2": "^0.1.0",
     "sprintf-js": "^1.0.2"
-  }
+  },
+  "gitHead": "9ce856f7351cb5f33f4c4f742d82cf5dcfba5032",
+  "readme": "ERROR: No README data found!",
+  "_id": "shipit-shared@1.0.0",
+  "_shasum": "311a7992a787f77db2e48c09119bdce043ac8df2",
+  "_from": "shipit-shared@>=1.0.0 <2.0.0"
 }
