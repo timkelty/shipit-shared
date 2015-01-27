@@ -5,7 +5,6 @@ var path = require('path');
 var chalk = require('chalk');
 var Bluebird = require('bluebird');
 
-
 /**
  * Create shared symlinks.
  * - shared:link
