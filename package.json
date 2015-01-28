@@ -1,6 +1,7 @@
 {
   "name": "shipit-shared",
   "version": "1.2.0",
+  "description": "Symlink unsourced files and directories, like Capistrano.",
   "main": "index.js",
   "directories": {
     "test": "test"
@@ -30,8 +31,7 @@
     "chai": "^1.10.0",
     "mocha": "^2.1.0",
     "rewire": "^2.1.4",
-    "shipit": "^0.1.16",
-    "shipit-cli": "^1.0.0",
+    "shipit-cli": "^1.1.0",
     "sinon": "^1.12.2",
     "sinon-as-promised": "^2.0.3",
     "sinon-chai": "^2.6.0"
