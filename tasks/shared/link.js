@@ -1,7 +1,7 @@
 var registerTask = require('../../lib/register-task');
 var getShipit = require('../../lib/get-shipit');
 var sprintf = require('sprintf-js').sprintf;
-var path = require('path');
+var path = require('path2/posix');
 var chalk = require('chalk');
 var Bluebird = require('bluebird');
 
