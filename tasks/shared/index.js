@@ -15,7 +15,7 @@ module.exports = function (gruntOrShipit) {
     'shared:link',
   ]);
 
-  gruntOrShipit.on('deploy:published', function () {
-    gruntOrShipit.run('shared');
+  gruntOrShipit.on('published', function () {
+    gruntOrShipit.start('shared');
   });
 };
