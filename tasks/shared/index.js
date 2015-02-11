@@ -19,7 +19,7 @@ module.exports = function (gruntOrShipit) {
     'shared:link',
   ]);
 
-  shipit.on('deploy', function () {
+  shipit.on('published', function () {
     runTask(gruntOrShipit, 'shared');
   });
 };
