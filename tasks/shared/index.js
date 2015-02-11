@@ -9,8 +9,8 @@ var getShipit = require('../../lib/get-shipit');
 
 module.exports = function (gruntOrShipit) {
   var shipit = getShipit(gruntOrShipit);
-  require('./create-dirs')(shipit);
-  require('./link')(shipit);
+  require('./create-dirs')(gruntOrShipit);
+  require('./link')(gruntOrShipit);
 
   registerTask(shipit, 'shared', [
     'shared:create-dirs',

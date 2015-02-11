@@ -1,4 +1,5 @@
 var registerTask = require('../../lib/register-task');
+var getShipit = require('../../lib/get-shipit');
 var sprintf = require('sprintf-js').sprintf;
 var path = require('path2/posix');
 var chalk = require('chalk');
@@ -11,7 +12,8 @@ var Bluebird = require('bluebird');
  * - shared:link:files
  */
 
-module.exports = function (shipit) {
+module.exports = function (gruntOrShipit) {
+  var shipit = getShipit(gruntOrShipit);
 
   registerTask(shipit, 'shared:link:dirs', linkDirs);
   registerTask(shipit, 'shared:link:files', linkFiles);
