@@ -14,10 +14,9 @@ var Bluebird = require('bluebird');
 
 module.exports = function (gruntOrShipit) {
   var shipit = getShipit(gruntOrShipit);
-
-  registerTask(shipit, 'shared:link:dirs', linkDirs);
-  registerTask(shipit, 'shared:link:files', linkFiles);
-  registerTask(shipit, 'shared:link', [
+  registerTask(gruntOrShipit, 'shared:link:dirs', linkDirs);
+  registerTask(gruntOrShipit, 'shared:link:files', linkFiles);
+  registerTask(gruntOrShipit, 'shared:link', [
     'shared:link:dirs',
     'shared:link:files'
   ]);

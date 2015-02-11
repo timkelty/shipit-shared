@@ -1,5 +1,6 @@
 var registerTask = require('../../lib/register-task');
 var getShipit = require('../../lib/get-shipit');
+var runTask = require('../../lib/run-task');
 
 /**
  * Symlink shared files and directories.
@@ -9,15 +10,16 @@ var getShipit = require('../../lib/get-shipit');
 
 module.exports = function (gruntOrShipit) {
   var shipit = getShipit(gruntOrShipit);
+
   require('./create-dirs')(gruntOrShipit);
   require('./link')(gruntOrShipit);
 
-  registerTask(shipit, 'shared', [
+  registerTask(gruntOrShipit, 'shared', [
     'shared:create-dirs',
     'shared:link',
   ]);
 
-  shipit.on('published', function () {
-    shipit.start('shared');
+  shipit.on('deploy', function () {
+    runTask(gruntOrShipit, 'shared');
   });
 };
