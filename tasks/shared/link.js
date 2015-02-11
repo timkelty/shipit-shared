@@ -1,5 +1,4 @@
 var registerTask = require('../../lib/register-task');
-var getShipit = require('../../lib/get-shipit');
 var sprintf = require('sprintf-js').sprintf;
 var path = require('path2/posix');
 var chalk = require('chalk');
@@ -12,12 +11,11 @@ var Bluebird = require('bluebird');
  * - shared:link:files
  */
 
-module.exports = function (gruntOrShipit) {
-  var shipit = getShipit(gruntOrShipit);
+module.exports = function (shipit) {
 
-  registerTask(gruntOrShipit, 'shared:link:dirs', linkDirs);
-  registerTask(gruntOrShipit, 'shared:link:files', linkFiles);
-  registerTask(gruntOrShipit, 'shared:link', [
+  registerTask(shipit, 'shared:link:dirs', linkDirs);
+  registerTask(shipit, 'shared:link:files', linkFiles);
+  registerTask(shipit, 'shared:link', [
     'shared:link:dirs',
     'shared:link:files'
   ]);
@@ -37,7 +35,6 @@ module.exports = function (gruntOrShipit) {
   }
 
   function linkDirs() {
-    var shipit = getShipit(gruntOrShipit);
     var promises = shipit.config.linkedDirs.map(function(path) {
       link(path, false);
     });
@@ -50,7 +47,6 @@ module.exports = function (gruntOrShipit) {
   }
 
   function linkFiles() {
-    var shipit = getShipit(gruntOrShipit);
     var promises = shipit.config.linkedFiles.map(function(path) {
       link(path, true);
     });
