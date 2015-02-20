@@ -1,5 +1,4 @@
-var registerTask = require('../../lib/register-task');
-var getShipit = require('../../lib/get-shipit');
+var utils = require('shipit-utils');
 var chalk = require('chalk');
 var sprintf = require('sprintf-js').sprintf;
 
@@ -9,8 +8,8 @@ var sprintf = require('sprintf-js').sprintf;
  */
 
 module.exports = function (gruntOrShipit) {
-  var shipit = getShipit(gruntOrShipit);
-  registerTask(gruntOrShipit, 'shared:create-dirs', task);
+  var shipit = utils.getShipit(gruntOrShipit);
+  utils.registerTask(gruntOrShipit, 'shared:create-dirs', task);
 
   function task() {
     function createDirs(paths, remote, isFile) {
