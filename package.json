@@ -43,6 +43,7 @@
     "mkdirp": "^0.5.0",
     "moment": "^2.9.0",
     "path2": "^0.1.0",
+    "shipit-utils": "^1.0.2",
     "sprintf-js": "^1.0.2"
   },
   "gitHead": "9ce856f7351cb5f33f4c4f742d82cf5dcfba5032",
