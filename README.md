@@ -27,6 +27,7 @@ npm install shipit-shared
 
 ```js
 module.exports = function (shipit) {
+  require('shipit-deploy')(shipit);
   require('shipit-shared')(shipit);
 
   shipit.initConfig({
