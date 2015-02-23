@@ -27,8 +27,8 @@ module.exports = function (gruntOrShipit) {
 
     shipit.log('Creating shared directories on remote.');
 
-    return createDirs(shipit.config.linkedDirs, true, false)
-    .then(createDirs(shipit.config.linkedFiles, true, true))
+    return createDirs(shipit.config.shared.dirs, true, false)
+    .then(createDirs(shipit.config.shared.files, true, true))
     .then(function () {
       shipit.emit('dirs-created');
       shipit.log(chalk.green('Shared directories created on remote.'));
