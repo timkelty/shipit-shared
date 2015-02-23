@@ -12,7 +12,6 @@ var Bluebird = require('bluebird');
  */
 
 module.exports = function (gruntOrShipit) {
-  var shipit = utils.getShipit(gruntOrShipit);
   utils.registerTask(gruntOrShipit, 'shared:link:dirs', linkDirs);
   utils.registerTask(gruntOrShipit, 'shared:link:files', linkFiles);
   utils.registerTask(gruntOrShipit, 'shared:link', [
@@ -21,6 +20,7 @@ module.exports = function (gruntOrShipit) {
   ]);
 
   function link(filePath, isFile) {
+    var shipit = utils.getShipit(gruntOrShipit);
     shipit.currentPath = path.join(shipit.config.deployTo, 'current');
     shipit.sharedPath = path.join(shipit.config.deployTo, 'shared');
 
@@ -35,6 +35,7 @@ module.exports = function (gruntOrShipit) {
   }
 
   function linkDirs() {
+    var shipit = utils.getShipit(gruntOrShipit);
     var promises = shipit.config.linkedDirs.map(function(path) {
       link(path, false);
     });

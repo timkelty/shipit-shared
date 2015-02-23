@@ -8,10 +8,11 @@ var sprintf = require('sprintf-js').sprintf;
  */
 
 module.exports = function (gruntOrShipit) {
-  var shipit = utils.getShipit(gruntOrShipit);
   utils.registerTask(gruntOrShipit, 'shared:create-dirs', task);
 
   function task() {
+    var shipit = utils.getShipit(gruntOrShipit);
+
     function createDirs(paths, remote, isFile) {
       isFile = isFile || false;
       var method = remote ? 'remote' : 'local';

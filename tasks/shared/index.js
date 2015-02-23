@@ -8,7 +8,6 @@ var utils = require('shipit-utils');
 
 module.exports = function (gruntOrShipit) {
   var shipit = utils.getShipit(gruntOrShipit);
-
   require('./create-dirs')(gruntOrShipit);
   require('./link')(gruntOrShipit);
 
