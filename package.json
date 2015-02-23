@@ -1,6 +1,6 @@
 {
   "name": "shipit-shared",
-  "version": "1.5.5",
+  "version": "1.6.0",
   "description": "Symlink unsourced files and directories, like Capistrano.",
   "main": "index.js",
   "directories": {
