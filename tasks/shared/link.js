@@ -3,6 +3,7 @@ var sprintf = require('sprintf-js').sprintf;
 var path = require('path2/posix');
 var chalk = require('chalk');
 var Bluebird = require('bluebird');
+var init = require('../../lib/init');
 
 /**
  * Create shared symlinks.
@@ -21,8 +22,7 @@ module.exports = function (gruntOrShipit) {
 
   function link(filePath, isFile) {
     var shipit = utils.getShipit(gruntOrShipit);
-    shipit.currentPath = path.join(shipit.config.deployTo, 'current');
-    shipit.sharedPath = path.join(shipit.config.deployTo, shipit.config.shared.baseDir || 'shared');
+    shipit = init(shipit);
 
     return shipit.remote(
       sprintf('if [ -e %(source)s ]; then if ! [ -L %(target)s ]; then if [ %(targetTest)s %(target)s ]; then rm %(targetRmArgs)s %(target)s; fi; ln -s %(source)s %(target)s; fi; fi', {
@@ -36,6 +36,11 @@ module.exports = function (gruntOrShipit) {
 
   function linkDirs() {
     var shipit = utils.getShipit(gruntOrShipit);
+    shipit = init(shipit);
+    if (!shipit.config.shared.dirs.length) {
+      return Bluebird.resolve();
+    }
+
     var promises = shipit.config.shared.dirs.map(function(path) {
       link(path, false);
     });
@@ -48,6 +53,12 @@ module.exports = function (gruntOrShipit) {
 
   function linkFiles() {
     var shipit = utils.getShipit(gruntOrShipit);
+    shipit = init(shipit);
+
+    if (!shipit.config.shared.files.length) {
+      return Bluebird.resolve();
+    }
+
     var promises = shipit.config.shared.files.map(function(path) {
       link(path, true);
     });
