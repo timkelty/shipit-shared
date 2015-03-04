@@ -12,7 +12,6 @@ var path = require('path');
 
 module.exports = function (gruntOrShipit) {
 
-
   var task = function task() {
     var shipit = utils.getShipit(gruntOrShipit);
     shipit = init(shipit);
