@@ -81,7 +81,7 @@ An array of files to symlink to `current`.
 
 Type: `String`
 
-Path where files will be symlinked from. Relative to `shipit.config.deployTo`. Default: `shared`
+Path where files will be symlinked from. If the path is relative (not starting with `/`), it will be relative to `shipit.config.deployTo`. Default: `shared`
 
 ## License
 
