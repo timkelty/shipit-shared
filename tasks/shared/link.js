@@ -26,7 +26,7 @@ module.exports = function (gruntOrShipit) {
 
     return shipit.remote(
       sprintf('if [ -e %(source)s ]; then if ! [ -L %(target)s ]; then if [ %(targetTest)s %(target)s ]; then rm %(targetRmArgs)s %(target)s; fi; ln -s %(source)s %(target)s; fi; fi', {
-        source: path.join(shipit.sharedPath, filePath),
+        source: path.join(shipit.sharedSymlinkPath, filePath),
         target: path.join(shipit.currentPath, filePath),
         targetTest: isFile ? '-d' : '-f',
         targetRmArgs: isFile ? '-rf' : '',
