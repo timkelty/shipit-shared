@@ -2,8 +2,6 @@ var utils = require('shipit-utils');
 
 /**
  * Symlink shared files and directories.
- * - shared:create-remote-dirs
- * - shared:link
  */
 
 module.exports = function (gruntOrShipit) {

@@ -7,7 +7,6 @@ var path = require('path');
 
 /**
  * Create required directories for linked files and dirs.
- * - shared:create-dirs
  */
 
 module.exports = function (gruntOrShipit) {

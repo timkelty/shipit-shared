@@ -7,9 +7,6 @@ var init = require('../../lib/init');
 
 /**
  * Create shared symlinks.
- * - shared:link
- * - shared:link:dirs
- * - shared:link:files
  */
 
 module.exports = function (gruntOrShipit) {
