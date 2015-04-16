@@ -20,16 +20,14 @@ module.exports = function (gruntOrShipit) {
     'shared:link:files'
   ]);
 
-  function link(filePath, isFile) {
+  function link(filePath) {
     var shipit = utils.getShipit(gruntOrShipit);
     shipit = init(shipit);
 
     return shipit.remote(
-      sprintf('if [ -e %(source)s ]; then if ! [ -L %(target)s ]; then if [ %(targetTest)s %(target)s ]; then rm %(targetRmArgs)s %(target)s; fi; ln -s %(source)s %(target)s; fi; fi', {
+      sprintf('if ( ! [ -h %(target)s ] ) || ( [ -h %(target)s ] && [ $(readlink -n %(target)s ) != %(source)s ] ); then if [ -e %(target)s ]; then rm -r %(target)s; fi; ln -s %(source)s %(target)s; fi', {
         source: path.join(shipit.sharedSymlinkPath, filePath),
-        target: path.join(shipit.currentPath, filePath),
-        targetTest: isFile ? '-d' : '-f',
-        targetRmArgs: isFile ? '-rf' : '',
+        target: path.join(shipit.currentPath, filePath)
       })
     );
   }
@@ -42,7 +40,7 @@ module.exports = function (gruntOrShipit) {
     }
 
     var promises = shipit.config.shared.dirs.map(function(path) {
-      link(path, false);
+      link(path);
     });
 
     return new Bluebird.all(promises)
@@ -60,7 +58,7 @@ module.exports = function (gruntOrShipit) {
     }
 
     var promises = shipit.config.shared.files.map(function(path) {
-      link(path, true);
+      link(path);
     });
 
     return new Bluebird.all(promises)
