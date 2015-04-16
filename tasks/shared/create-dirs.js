@@ -1,6 +1,6 @@
 var utils = require('shipit-utils');
 var chalk = require('chalk');
-var sprintf = require('sprintf-js').sprintf;
+var util = require('util');
 var init = require('../../lib/init');
 var Bluebird = require('bluebird');
 var path = require('path');
@@ -25,11 +25,11 @@ module.exports = function (gruntOrShipit) {
       var method = remote ? 'remote' : 'local';
       var pathStr = paths.map(function(filePath) {
         filePath = remote ? path.join(shipit.sharedPath, filePath) : filePath;
-        return isFile ? sprintf('$(dirname %s)', filePath) : filePath;
+        return isFile ? util.format('$(dirname %s)', filePath) : filePath;
       }).join(' ');
 
       return shipit[method](
-        sprintf('mkdir -p %s', pathStr)
+        util.format('mkdir -p %s', pathStr)
       );
     };
 
