@@ -22,7 +22,7 @@ module.exports = function (gruntOrShipit) {
     shipit = init(shipit);
 
     return shipit.remote(
-      sprintf('if ( ! [ -h "%(target)s" ] ) || ( [ -h "%(target)s" ] && [ $(readlink -n "%(target)s" ) != "%(source)s" ] ); then if [ -edfh "%(target)s" ]; then rm -r "%(target)s"; fi; ln -s "%(source)s" "%(target)s"; fi', {
+      sprintf('if ( ! [ -h "%(target)s" ] ) || ( [ -h "%(target)s" ] && [ $(readlink -n "%(target)s" ) != "%(source)s" ] ); then rm -r "%(target)s" 2> /dev/null; ln -s "%(source)s" "%(target)s"; fi', {
         source: path.join(shipit.sharedSymlinkPath, filePath),
         target: path.join(shipit.releasesPath, shipit.releaseDirname, filePath)
       })
