@@ -77,11 +77,19 @@ Type: `Array`
 
 An array of files to symlink to `current`.
 
-### `shared.baseDir`
+### `shared.path`
 
 Type: `String`
+Default: `path.join(shipit.config.deployTo, 'shared')`
 
-Path where files will be symlinked from. If the path is relative (not starting with `/`), it will be relative to `shipit.config.deployTo`. Default: `shared`
+The path where your shared files reside.
+
+### `shared.symlinkPath`
+
+Type: `String`
+Default: `shared.path`
+
+The path that will serve as the source for your symlink. This is usually the same as `shared.path`, however it can [necessary to set this in a `chroot` environment](https://github.com/timkelty/shipit-shared/issues/7).
 
 ## License
 
