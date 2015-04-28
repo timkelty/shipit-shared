@@ -37,6 +37,9 @@ module.exports = function (gruntOrShipit) {
     .then(createDirs(shipit.config.shared.files, true, true))
     .then(function () {
       shipit.log(chalk.green('Shared directories created on remote.'));
+    })
+    .then(function () {
+      shipit.emit('shared:create-dirs');
     });
   };
 

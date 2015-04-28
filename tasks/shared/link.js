@@ -43,6 +43,9 @@ module.exports = function (gruntOrShipit) {
     return new Bluebird.all(promises)
     .then(function () {
       shipit.log(chalk.green('Shared directories symlinked on remote.'));
+    })
+    .then(function () {
+      shipit.emit('shared:link:dirs')
     });
   }
 
@@ -61,6 +64,9 @@ module.exports = function (gruntOrShipit) {
     return new Bluebird.all(promises)
     .then(function () {
       shipit.log(chalk.green('Shared files symlinked on remote.'));
+    })
+    .then(function () {
+      shipit.emit('shared:link:files')
     });
   }
 };
