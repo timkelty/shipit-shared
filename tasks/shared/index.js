@@ -11,10 +11,10 @@ module.exports = function (gruntOrShipit) {
 
   utils.registerTask(gruntOrShipit, 'shared', [
     'shared:create-dirs',
-    'shared:link',
+    'shared:link'
   ]);
 
-  shipit.on('published', function () {
+  shipit.on('updated', function () {
     utils.runTask(gruntOrShipit, 'shared');
   });
 };
