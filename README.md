@@ -9,7 +9,6 @@ Based on the concept of `linked_files`/`linked_dirs` from [Capistrano](http://ca
 - Triggered on the `published` event from [shipit-deploy](https://github.com/shipitjs/shipit-deploy)
 - All neccesary directories are always created for you, whether you are linking a file or a directory.
 - Works via [shipit-cli](https://github.com/shipitjs/shipit) and [grunt-shipit](https://github.com/shipitjs/grunt-shipit)
-- Optionally ignore specified tables
 
 **Roadmap**
 
