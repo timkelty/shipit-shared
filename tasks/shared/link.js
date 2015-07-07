@@ -21,8 +21,15 @@ module.exports = function (gruntOrShipit) {
     var shipit = utils.getShipit(gruntOrShipit);
 
     return init(shipit).then(function(shipit) {
+
+      var cmd = [];
+      cmd.push('if ( ! [ -h "%(target)s" ] ) || ( [ -h "%(target)s" ] && [ $(readlink "%(target)s" != "%(source)s") ] ); then');
+      cmd.push('rm -r "%(target)s" 2> /dev/null;');
+      cmd.push('ln -s "%(source)s" "%(target)s";');
+      cmd.push('fi');
+
       return shipit.remote(
-        sprintf('if ( ! [ -h "%(target)s" ] ) || ( [ -h "%(target)s" ] && [ "`readlink %(target)s`" != "%(source)s" ] ); then rm -r "%(target)s" 2> /dev/null; ln -s "%(source)s" "%(target)s"; fi', {
+        sprintf(cmd.join(' '), {
           source: path.join(shipit.sharedSymlinkPath, filePath),
           target: path.join(shipit.releasesPath, shipit.releaseDirname, filePath)
         })
