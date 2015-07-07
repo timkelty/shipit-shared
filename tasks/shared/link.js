@@ -19,54 +19,56 @@ module.exports = function (gruntOrShipit) {
 
   function link(filePath) {
     var shipit = utils.getShipit(gruntOrShipit);
-    shipit = init(shipit);
 
-    return shipit.remote(
-      sprintf('if ( ! [ -h "%(target)s" ] ) || ( [ -h "%(target)s" ] && [ "`readlink %(target)s`" != "%(source)s" ] ); then rm -r "%(target)s" 2> /dev/null; ln -s "%(source)s" "%(target)s"; fi', {
-        source: path.join(shipit.sharedSymlinkPath, filePath),
-        target: path.join(shipit.releasesPath, shipit.releaseDirname, filePath)
-      })
-    );
+    return init(shipit).then(function(shipit) {
+      return shipit.remote(
+        sprintf('if ( ! [ -h "%(target)s" ] ) || ( [ -h "%(target)s" ] && [ "`readlink %(target)s`" != "%(source)s" ] ); then rm -r "%(target)s" 2> /dev/null; ln -s "%(source)s" "%(target)s"; fi', {
+          source: path.join(shipit.sharedSymlinkPath, filePath),
+          target: path.join(shipit.releasesPath, shipit.releaseDirname, filePath)
+        })
+      );
+    });
   }
 
   function linkDirs() {
     var shipit = utils.getShipit(gruntOrShipit);
-    shipit = init(shipit);
-    if (!shipit.config.shared.dirs.length) {
-      return Bluebird.resolve();
-    }
+    return init(shipit).then(function(shipit) {
+      if (!shipit.config.shared.dirs.length) {
+        return Bluebird.resolve();
+      }
 
-    var promises = shipit.config.shared.dirs.map(function(path) {
-      link(path);
-    });
+      var promises = shipit.config.shared.dirs.map(function(path) {
+        link(path);
+      });
 
-    return new Bluebird.all(promises)
-    .then(function () {
-      shipit.log(chalk.green('Shared directories symlinked on remote.'));
-    })
-    .then(function () {
-      shipit.emit('shared:link:dirs')
+      return new Bluebird.all(promises)
+      .then(function () {
+        shipit.log(chalk.green('Shared directories symlinked on remote.'));
+      })
+      .then(function () {
+        shipit.emit('shared:link:dirs');
+      });
     });
   }
 
   function linkFiles() {
     var shipit = utils.getShipit(gruntOrShipit);
-    shipit = init(shipit);
+    return init(shipit).then(function(shipit) {
+      if (!shipit.config.shared.files.length) {
+        return Bluebird.resolve();
+      }
 
-    if (!shipit.config.shared.files.length) {
-      return Bluebird.resolve();
-    }
+      var promises = shipit.config.shared.files.map(function(path) {
+        link(path);
+      });
 
-    var promises = shipit.config.shared.files.map(function(path) {
-      link(path);
-    });
-
-    return new Bluebird.all(promises)
-    .then(function () {
-      shipit.log(chalk.green('Shared files symlinked on remote.'));
-    })
-    .then(function () {
-      shipit.emit('shared:link:files')
+      return new Bluebird.all(promises)
+      .then(function () {
+        shipit.log(chalk.green('Shared files symlinked on remote.'));
+      })
+      .then(function () {
+        shipit.emit('shared:link:files')
+      });
     });
   }
 };
