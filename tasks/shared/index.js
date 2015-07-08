@@ -16,9 +16,12 @@ module.exports = function (gruntOrShipit) {
   ]);
 
   // Trigger on deploy by default
-  if (shipit.config.shared.triggerOn) {
-    shipit.on(shipit.config.shared.triggerOn, function () {
-      utils.runTask(gruntOrShipit, 'shared');
-    });
-  }
+  shipit.on('start', function() {
+    var event = shipit.config.shared.triggerOn || 'updated';
+    if (event) {
+      shipit.on(event, function () {
+        utils.runTask(gruntOrShipit, 'shared');
+      });
+    }
+  });
 };
