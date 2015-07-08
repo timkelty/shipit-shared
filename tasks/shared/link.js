@@ -32,7 +32,7 @@ module.exports = function (gruntOrShipit) {
         return shipit.remote(cmd).then(function(response) {
           response.forEach(function(elem) {
             if (elem.stdout.trim() === 'false') {
-              throw new Error(sprintf('Cannot create shared symlink, file exists at %(target)s.\nSee https://github.com/timkelty/shipit-shared/#sharedoverwrite for more information.', {
+              throw new Error(sprintf('Cannot create shared symlink, file exists at %(target)s. See https://github.com/timkelty/shipit-shared/#sharedoverwrite for more information.', {
                 target: target
               }));
             }
@@ -50,7 +50,7 @@ module.exports = function (gruntOrShipit) {
         return shipit.remote(cmd);
       })
       .catch(function(e) {
-        console.log(chalk.bold.red(e.message));
+        console.log(chalk.bold.red('\nError: ' + e.message));
         process.exit();
       });
     });
