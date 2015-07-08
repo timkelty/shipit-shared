@@ -1,4 +1,5 @@
 var utils = require('shipit-utils');
+var init = require('../../lib/init');
 
 /**
  * Symlink shared files and directories.
@@ -14,7 +15,10 @@ module.exports = function (gruntOrShipit) {
     'shared:link'
   ]);
 
-  shipit.on('updated', function () {
-    utils.runTask(gruntOrShipit, 'shared');
-  });
+  // Trigger on deploy by default
+  if (shipit.config.shared.triggerOn) {
+    shipit.on(shipit.config.shared.triggerOn, function () {
+      utils.runTask(gruntOrShipit, 'shared');
+    });
+  }
 };

@@ -2,7 +2,7 @@ var utils = require('shipit-utils');
 var chalk = require('chalk');
 var util = require('util');
 var init = require('../../lib/init');
-var Bluebird = require('bluebird');
+var Promise = require('bluebird');
 var path = require('path');
 
 /**
@@ -16,13 +16,13 @@ module.exports = function (gruntOrShipit) {
     return init(shipit).then(function(shipit) {
       var createDirs = function createDirs(paths, remote, isFile) {
         if (!paths.length) {
-          return Bluebird.resolve();
+          return Promise.resolve();
         }
 
         isFile = isFile || false;
         var method = remote ? 'remote' : 'local';
         var pathStr = paths.map(function(el) {
-          var filePath = remote ? path.join(shipit.sharedPath, el.path) : el.path;
+          var filePath = remote ? path.join(shipit.config.shared.basePath, el.path) : el.path;
           return isFile ? util.format('$(dirname %s)', filePath) : filePath;
         }).join(' ');
 

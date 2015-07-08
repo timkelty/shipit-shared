@@ -2,7 +2,7 @@ var utils = require('shipit-utils');
 var sprintf = require('sprintf-js').sprintf;
 var path = require('path2/posix');
 var chalk = require('chalk');
-var Bluebird = require('bluebird');
+var Promise = require('bluebird');
 var init = require('../../lib/init');
 var _ = require('lodash');
 
@@ -22,8 +22,7 @@ module.exports = function (gruntOrShipit) {
     var shipit = utils.getShipit(gruntOrShipit);
 
     return init(shipit).then(function(shipit) {
-
-      var source = path.join(shipit.sharedSymlinkPath, file.path);
+      var source = path.join(shipit.config.shared.symlinkPath, file.path);
       var target = path.join(shipit.releasesPath, shipit.releaseDirname, file.path);
       var check = function() {
         var cmd = sprintf('if ( [ -e "%(target)s" ] && ! [ -h "%(target)s" ] ); then echo false; fi', {
@@ -59,14 +58,14 @@ module.exports = function (gruntOrShipit) {
     var shipit = utils.getShipit(gruntOrShipit);
     return init(shipit).then(function(shipit) {
       if (!shipit.config.shared.dirs.length) {
-        return Bluebird.resolve();
+        return Promise.resolve();
       }
 
       var promises = shipit.config.shared.dirs.map(function(path) {
         link(path);
       });
 
-      return new Bluebird.all(promises)
+      return new Promise.all(promises)
       .then(function () {
         shipit.log(chalk.green('Shared directories symlinked on remote.'));
       })
@@ -80,14 +79,14 @@ module.exports = function (gruntOrShipit) {
     var shipit = utils.getShipit(gruntOrShipit);
     return init(shipit).then(function(shipit) {
       if (!shipit.config.shared.files.length) {
-        return Bluebird.resolve();
+        return Promise.resolve();
       }
 
       var promises = shipit.config.shared.files.map(function(path) {
         link(path);
       });
 
-      return new Bluebird.all(promises)
+      return new Promise.all(promises)
       .then(function () {
         shipit.log(chalk.green('Shared files symlinked on remote.'));
       })
