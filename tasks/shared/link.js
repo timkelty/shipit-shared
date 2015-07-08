@@ -18,12 +18,12 @@ module.exports = function (gruntOrShipit) {
     'shared:link:files'
   ]);
 
-  function link(file) {
+  var link = function link(item) {
     var shipit = utils.getShipit(gruntOrShipit);
 
     return init(shipit).then(function(shipit) {
-      var source = path.join(shipit.config.shared.symlinkPath, file.path);
-      var target = path.join(shipit.releasesPath, shipit.releaseDirname, file.path);
+      var source = path.join(shipit.config.shared.symlinkPath, item.path);
+      var target = path.join(shipit.releasesPath, shipit.releaseDirname, item.path);
       var check = function() {
         var cmd = sprintf('if ( [ -e "%(target)s" ] && ! [ -h "%(target)s" ] ); then echo false; fi', {
           target: target
@@ -32,7 +32,7 @@ module.exports = function (gruntOrShipit) {
         return shipit.remote(cmd).then(function(response) {
           response.forEach(function(elem) {
             if (elem.stdout.trim() === 'false') {
-              throw new Error(sprintf('Cannot create shared symlink, file exists: %(target)s', {
+              throw new Error(sprintf('Cannot create shared symlink, file exists at %(target)s.\nSee https://github.com/timkelty/shipit-shared/#sharedoverwrite for more information.', {
                 target: target
               }));
             }
@@ -40,17 +40,19 @@ module.exports = function (gruntOrShipit) {
         })
       };
 
-      return new Promise(function(resolve, reject) {
-        return file.overwrite ? resolve(file.overwrite) : check();
-      }).then(function() {
+      return Promise.resolve(item.overwrite ? item.overwrite : check())
+      .then(function() {
         var cmd = sprintf('if ( ! [ -h "%(target)s" ] ); then rm -rf "%(target)s" 2> /dev/null; ln -s "%(source)s" "%(target)s"; fi', {
           source: source,
           target: target
         });
 
         return shipit.remote(cmd);
+      })
+      .catch(function(e) {
+        console.log(chalk.bold.red(e.message));
+        process.exit();
       });
-
     });
   }
 
@@ -61,8 +63,8 @@ module.exports = function (gruntOrShipit) {
         return Promise.resolve();
       }
 
-      var promises = shipit.config.shared.dirs.map(function(path) {
-        link(path);
+      var promises = shipit.config.shared.dirs.map(function(item) {
+        return link(item);
       });
 
       return new Promise.all(promises)
@@ -82,8 +84,8 @@ module.exports = function (gruntOrShipit) {
         return Promise.resolve();
       }
 
-      var promises = shipit.config.shared.files.map(function(path) {
-        link(path);
+      var promises = shipit.config.shared.files.map(function(item) {
+        return link(item);
       });
 
       return new Promise.all(promises)
