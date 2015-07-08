@@ -4,6 +4,7 @@ var path = require('path2/posix');
 var chalk = require('chalk');
 var Bluebird = require('bluebird');
 var init = require('../../lib/init');
+var _ = require('lodash');
 
 /**
  * Create shared symlinks.
@@ -17,23 +18,40 @@ module.exports = function (gruntOrShipit) {
     'shared:link:files'
   ]);
 
-  function link(filePath) {
+  function link(file) {
     var shipit = utils.getShipit(gruntOrShipit);
 
     return init(shipit).then(function(shipit) {
 
-      var cmd = [];
-      cmd.push('if ( ! [ -h "%(target)s" ] ) || ( [ -h "%(target)s" ] && [ $(readlink "%(target)s" != "%(source)s") ] ); then');
-      cmd.push('rm -r "%(target)s" 2> /dev/null;');
-      cmd.push('ln -s "%(source)s" "%(target)s";');
-      cmd.push('fi');
+      var source = path.join(shipit.sharedSymlinkPath, file.path);
+      var target = path.join(shipit.releasesPath, shipit.releaseDirname, file.path);
+      var check = function() {
+        var cmd = sprintf('if ( [ -e "%(target)s" ] && ! [ -h "%(target)s" ] ); then echo false; fi', {
+          target: target
+        });
 
-      return shipit.remote(
-        sprintf(cmd.join(' '), {
-          source: path.join(shipit.sharedSymlinkPath, filePath),
-          target: path.join(shipit.releasesPath, shipit.releaseDirname, filePath)
+        return shipit.remote(cmd).then(function(response) {
+          response.forEach(function(elem) {
+            if (elem.stdout.trim() === 'false') {
+              throw new Error(sprintf('Cannot create shared symlink, file exists: %(target)s', {
+                target: target
+              }));
+            }
+          });
         })
-      );
+      };
+
+      return new Promise(function(resolve, reject) {
+        return file.overwrite ? resolve(file.overwrite) : check();
+      }).then(function() {
+        var cmd = sprintf('if ( ! [ -h "%(target)s" ] ); then rm -rf "%(target)s" 2> /dev/null; ln -s "%(source)s" "%(target)s"; fi', {
+          source: source,
+          target: target
+        });
+
+        return shipit.remote(cmd);
+      });
+
     });
   }
 

@@ -21,8 +21,8 @@ module.exports = function (gruntOrShipit) {
 
         isFile = isFile || false;
         var method = remote ? 'remote' : 'local';
-        var pathStr = paths.map(function(filePath) {
-          filePath = remote ? path.join(shipit.sharedPath, filePath) : filePath;
+        var pathStr = paths.map(function(el) {
+          var filePath = remote ? path.join(shipit.sharedPath, el.path) : el.path;
           return isFile ? util.format('$(dirname %s)', filePath) : filePath;
         }).join(' ');
 
