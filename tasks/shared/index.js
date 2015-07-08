@@ -17,7 +17,7 @@ module.exports = function (gruntOrShipit) {
 
   // Trigger on deploy by default
   shipit.on('start', function() {
-    var event = shipit.config.shared.triggerOn || 'updated';
+    var event = shipit.config.shared.triggerEvent || 'updated';
     if (event) {
       shipit.on(event, function () {
         utils.runTask(gruntOrShipit, 'shared');
