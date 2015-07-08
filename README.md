@@ -6,7 +6,7 @@ Based on the concept of `linked_files`/`linked_dirs` from [Capistrano](http://ca
 
 **Features:**
 
-- Triggered on the `published` event from [shipit-deploy](https://github.com/shipitjs/shipit-deploy)
+- By default, the `shared` task is triggered on the `updated` event from [shipit-deploy](https://github.com/shipitjs/shipit-deploy)
 - All neccesary directories are always created for you, whether you are linking a file or a directory.
 - Works via [shipit-cli](https://github.com/shipitjs/shipit) and [grunt-shipit](https://github.com/shipitjs/grunt-shipit)
 
@@ -32,9 +32,13 @@ module.exports = function (shipit) {
   shipit.initConfig({
     default: {
       shared: {
+        overwrite: true,
         dirs: [
           'public/storage',
-          'db',
+          {
+            path: 'db',
+            overwrite: false,
+          }
         ],
         files: [
           'config/environment.yml',
@@ -64,31 +68,51 @@ shipit staging shared
 
 ## Options `shipit.config.shared`
 
-### `shared.dirs`
+### `shared.dirs`, `shared.files`
 
 Type: `Array`
 
-An array of directories to symlink to `current`.
+An array of files/directories to symlink into `current`. String values inherit default settings, objects allow per-item configuration:
 
-### `shared.files`
+```
+'public/storage'
+{
+  path: 'db',
+  overwrite: true,
+}
+```
 
-Type: `Array`
-
-An array of files to symlink to `current`.
-
-### `shared.path`
+### `shared.basePath`
 
 Type: `String`
 Default: `path.join(shipit.config.deployTo, 'shared')`
 
 The path where your shared files reside.
 
+### `shared.overwrite`
+
+Type: `Boolean`
+Default: `false`
+
+If `true`, the target of your symlink (in `current`), **will be removed (via rm -rf)** before creating the symlink. Under normal circumstances, this is fine, as files in `current` have come directly from a git checkout.
+
+If `false` and the target of your symlink is a file or directory, and error is thrown and the task aborted.
+
+The default setting of `false` is a safety precaution to prevent unintentionally losing data. See https://github.com/timkelty/shipit-shared/issues/17
+
 ### `shared.symlinkPath`
 
 Type: `String`
-Default: `shared.path`
+Default: `shared.basePath`
 
-The path that will serve as the source for your symlink. This is usually the same as `shared.path`, however it can [necessary to set this in a `chroot` environment](https://github.com/timkelty/shipit-shared/issues/7).
+The path that will serve as the source for your symlink. This is usually the same as `shared.basePath`, however it can [necessary to set this in a `chroot` environment](https://github.com/timkelty/shipit-shared/issues/7).
+
+### `shared.triggerOn`
+Type: `String`, `Boolean`
+Default: `updated`
+
+Trigger `shared` task on given event name.
+Set to `false` to prevent task from listening to any events.
 
 ## License
 
