@@ -12,8 +12,14 @@ module.exports = function(gruntOrShipit) {
 
   utils.registerTask(gruntOrShipit, 'shared', [
     'shared:create-dirs',
-    'shared:link'
+    'shared:link',
+    'shared:complete'
   ]);
+
+  // Until utils.registerTask can accept a callback...
+  utils.registerTask(gruntOrShipit, 'shared:complete', function() {
+    shipit.emit('shared');
+  });
 
   // Trigger on deploy by default
   shipit.on('start', function() {
