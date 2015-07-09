@@ -10,14 +10,7 @@ var _ = require('lodash');
  * Create shared symlinks.
  */
 
-module.exports = function (gruntOrShipit) {
-  utils.registerTask(gruntOrShipit, 'shared:link:dirs', linkDirs);
-  utils.registerTask(gruntOrShipit, 'shared:link:files', linkFiles);
-  utils.registerTask(gruntOrShipit, 'shared:link', [
-    'shared:link:dirs',
-    'shared:link:files'
-  ]);
-
+module.exports = function(gruntOrShipit) {
   var link = function link(item) {
     var shipit = utils.getShipit(gruntOrShipit);
 
@@ -49,9 +42,6 @@ module.exports = function (gruntOrShipit) {
 
         return shipit.remote(cmd);
       })
-      .then(function () {
-        shipit.emit('shared:link');
-      })
       .catch(function(e) {
         console.log(chalk.bold.red('\nError: ' + e.message));
         process.exit();
@@ -59,8 +49,9 @@ module.exports = function (gruntOrShipit) {
     });
   }
 
-  function linkDirs() {
+  var linkDirs = function linkDirs() {
     var shipit = utils.getShipit(gruntOrShipit);
+
     return init(shipit).then(function(shipit) {
       if (!shipit.config.shared.dirs.length) {
         return Promise.resolve();
@@ -71,17 +62,16 @@ module.exports = function (gruntOrShipit) {
       });
 
       return new Promise.all(promises)
-      .then(function () {
+      .then(function() {
         shipit.log(chalk.green('Shared directories symlinked on remote.'));
-      })
-      .then(function () {
-        shipit.emit('shared:link:dirs');
+        shipit.emit('sharedDirsLinked');
       });
     });
   }
 
-  function linkFiles() {
+  var linkFiles = function linkFiles() {
     var shipit = utils.getShipit(gruntOrShipit);
+
     return init(shipit).then(function(shipit) {
       if (!shipit.config.shared.files.length) {
         return Promise.resolve();
@@ -92,12 +82,17 @@ module.exports = function (gruntOrShipit) {
       });
 
       return new Promise.all(promises)
-      .then(function () {
+      .then(function() {
         shipit.log(chalk.green('Shared files symlinked on remote.'));
-      })
-      .then(function () {
-        shipit.emit('shared:link:files')
+        shipit.emit('sharedFilesLinked')
       });
     });
   }
+
+  utils.registerTask(gruntOrShipit, 'shared:link:dirs', linkDirs);
+  utils.registerTask(gruntOrShipit, 'shared:link:files', linkFiles);
+  utils.registerTask(gruntOrShipit, 'shared:link', [
+    'shared:link:dirs',
+    'shared:link:files'
+  ]);
 };
