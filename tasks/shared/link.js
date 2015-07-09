@@ -84,7 +84,7 @@ module.exports = function(gruntOrShipit) {
       return new Promise.all(promises)
       .then(function() {
         shipit.log(chalk.green('Shared files symlinked on remote.'));
-        shipit.emit('sharedFilesLinked')
+        shipit.emit('sharedFilesLinked');
       });
     });
   }
