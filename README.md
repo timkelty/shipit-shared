@@ -114,6 +114,17 @@ Default: `updated`
 Trigger `shared` task on given event name.
 Set to `false` to prevent task from listening to any events.
 
+## Events
+- `shared`
+  + `shared:create-dirs`
+    * Emit event `sharedDirsCreated`
+  + `shared:link`
+    * `shared:link-dirs`
+      - Emit event `sharedFilesDirs`
+    * `shared:link-files`
+      - Emit event `sharedFilesLinked`
+  + `shared:end`
+
 ## License
 
 MIT
