@@ -13,17 +13,18 @@ module.exports = function(gruntOrShipit) {
   utils.registerTask(gruntOrShipit, 'shared', [
     'shared:create-dirs',
     'shared:link',
-    'shared:complete'
+    'shared:end',
   ]);
 
   // Until utils.registerTask can accept a callback...
-  utils.registerTask(gruntOrShipit, 'shared:complete', function() {
-    shipit.emit('shared');
+  utils.registerTask(gruntOrShipit, 'shared:end', function() {
+    shipit.emit('sharedEnd');
   });
 
   // Trigger on deploy by default
   shipit.on('start', function() {
-    var event = shipit.config.shared.triggerEvent !== undefined ? shipit.config.shared.triggerEvent : 'updated';
+    var event = shipit.config.shared.triggerEvent;
+    event = event !== undefined ? event : 'updated';
 
     if (event) {
       shipit.on(event, function() {
