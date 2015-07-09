@@ -49,6 +49,9 @@ module.exports = function (gruntOrShipit) {
 
         return shipit.remote(cmd);
       })
+      .then(function () {
+        shipit.emit('shared:link');
+      })
       .catch(function(e) {
         console.log(chalk.bold.red('\nError: ' + e.message));
         process.exit();
