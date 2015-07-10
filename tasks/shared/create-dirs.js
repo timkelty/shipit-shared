@@ -33,12 +33,12 @@ module.exports = function(gruntOrShipit) {
         );
       };
 
-      shipit.log('Creating shared directories on remote.');
+      shipit.log(util.format('Creating shared directories on %s.', method));
 
       return createDirs(shipit.config.shared.dirs, true, false)
       .then(createDirs(shipit.config.shared.files, true, true))
       .then(function() {
-        shipit.log(chalk.green('Shared directories created on remote.'));
+        shipit.log(chalk.green(util.format('Shared directories created on %s.', method)));
       })
       .then(function() {
         shipit.emit('sharedDirsCreated');
