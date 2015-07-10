@@ -38,11 +38,16 @@ module.exports = function (shipit) {
           {
             path: 'db',
             overwrite: false,
+            chmod: '-R 777',
           }
         ],
         files: [
           'config/environment.yml',
-          'config/database.yml',
+          {
+            path: 'config/database.yml',
+            overwrite: false,
+            chmod: '755',
+          }
         ],
       }
     }
@@ -79,8 +84,27 @@ An array of files/directories to symlink into `current`. String values inherit d
 {
   path: 'db',
   overwrite: true,
+  chmod: '-R 777'
 }
 ```
+
+#### `path`
+
+Type: `String`
+
+Path to the shared file/directory (relative to `current`). 
+
+#### `overwrite`
+
+Type: `Boolean`
+
+If the target of the symlink exists in `current`, remove it before creating symlink.
+
+#### `chmod`
+
+Type: `String`
+
+Options passed to the `chmod` command for the given path. 
 
 ### `shared.basePath`
 
