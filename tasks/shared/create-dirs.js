@@ -13,6 +13,8 @@ module.exports = function(gruntOrShipit) {
 
   var task = function task() {
     var shipit = utils.getShipit(gruntOrShipit);
+    var remote = true;
+    var method = remote ? 'remote' : 'local';
 
     return init(shipit).then(function(shipit) {
       var createDirs = function createDirs(paths, remote, isFile) {
@@ -21,7 +23,6 @@ module.exports = function(gruntOrShipit) {
         }
 
         isFile = isFile || false;
-        var method = remote ? 'remote' : 'local';
         var pathStr = paths.map(function(el) {
           var filePath = remote ? path.join(shipit.config.shared.basePath, el.path) : el.path;
 
