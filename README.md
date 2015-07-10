@@ -8,6 +8,7 @@ Based on the concept of `linked_files`/`linked_dirs` from [Capistrano](http://ca
 
 - By default, the `shared` task is triggered on the `updated` event from [shipit-deploy](https://github.com/shipitjs/shipit-deploy)
 - All neccesary directories are always created for you, whether you are linking a file or a directory.
+- Optionally set permissions on files.
 - Works via [shipit-cli](https://github.com/shipitjs/shipit) and [grunt-shipit](https://github.com/shipitjs/grunt-shipit)
 
 **Roadmap**
