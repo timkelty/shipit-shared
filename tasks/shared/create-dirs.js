@@ -15,13 +15,26 @@ module.exports = function(gruntOrShipit) {
   var task = function task() {
     var shipit = utils.getShipit(gruntOrShipit);
 
-    var createDir = function(el) {
-      var filePath = shipit.config.shared.remote ? path.join(shipit.config.shared.basePath, el.path) : el.path;
-      var pathStr =  el.isFile ? util.format('$(dirname %s)', filePath) : filePath;
+    var getPathStr = function(el, basePath) {
+      basePath = basePath || shipit.config.shared.basePath;
+      var filePath = shipit.config.shared.remote ? path.join(basePath, el.path) : el.path;
 
+      return el.isFile ? util.format('$(dirname %s)', filePath) : filePath;
+    }
+
+    var createDir = function createDir(el) {
       return shipit[shipit.config.shared.shipitMethod](
-        util.format('mkdir -p %s', pathStr)
-      );
+        util.format('mkdir -p %s', getPathStr(el))
+      ).then(function() {
+
+        if (shipit.config.shared.remote && shipit.releasePath) {
+          return shipit.remote(
+            util.format('mkdir -p %s', getPathStr(el, shipit.releasePath))
+          );
+        };
+
+        return Promise.resolve();
+      });
     }
 
     return init(shipit).then(function(shipit) {

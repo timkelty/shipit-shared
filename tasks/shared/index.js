@@ -8,7 +8,7 @@ var init = require('../../lib/init');
 module.exports = function(gruntOrShipit) {
   var shipit = utils.getShipit(gruntOrShipit);
   require('./create-dirs')(gruntOrShipit);
-  // require('./set-permissions')(gruntOrShipit);
+  require('./set-permissions')(gruntOrShipit);
   require('./link')(gruntOrShipit);
 
   utils.registerTask(gruntOrShipit, 'shared', [
@@ -19,7 +19,7 @@ module.exports = function(gruntOrShipit) {
 
   utils.registerTask(gruntOrShipit, 'shared:prepare', [
     'shared:create-dirs',
-    // 'shared:set-permissions',
+    'shared:set-permissions',
   ]);
 
   // Until utils.registerTask can accept a callback...
