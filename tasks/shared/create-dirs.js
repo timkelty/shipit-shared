@@ -2,6 +2,7 @@ var utils = require('shipit-utils');
 var chalk = require('chalk');
 var util = require('util');
 var init = require('../../lib/init');
+var mapPromise = require('../../lib/map-promise');
 var Promise = require('bluebird');
 var path = require('path');
 
@@ -13,34 +14,23 @@ module.exports = function(gruntOrShipit) {
 
   var task = function task() {
     var shipit = utils.getShipit(gruntOrShipit);
-    var remote = true;
-    var method = remote ? 'remote' : 'local';
+
+    var createDir = function(el) {
+      var filePath = shipit.config.shared.remote ? path.join(shipit.config.shared.basePath, el.path) : el.path;
+      var pathStr =  el.isFile ? util.format('$(dirname %s)', filePath) : filePath;
+
+      return shipit[shipit.config.shared.shipitMethod](
+        util.format('mkdir -p %s', pathStr)
+      );
+    }
 
     return init(shipit).then(function(shipit) {
-      var createDirs = function createDirs(paths, remote, isFile) {
-        if (!paths.length) {
-          return Promise.resolve();
-        }
+      shipit.log(util.format('Creating shared directories on %s.', shipit.config.shared.shipitMethod));
 
-        isFile = isFile || false;
-        var method = remote ? 'remote' : 'local';
-        var pathStr = paths.map(function(el) {
-          var filePath = remote ? path.join(shipit.config.shared.basePath, el.path) : el.path;
-
-          return isFile ? util.format('$(dirname %s)', filePath) : filePath;
-        }).join(' ');
-
-        return shipit[method](
-          util.format('mkdir -p %s', pathStr)
-        );
-      };
-
-      shipit.log(util.format('Creating shared directories on %s.', method));
-
-      return createDirs(shipit.config.shared.dirs, true, false)
-      .then(createDirs(shipit.config.shared.files, true, true))
+      return mapPromise(shipit.config.shared.dirs, createDir)
+      .then(mapPromise(shipit.config.shared.files, createDir))
       .then(function() {
-        shipit.log(chalk.green(util.format('Shared directories created on %s.', method)));
+        shipit.log(chalk.green(util.format('Shared directories created on %s.', shipit.config.shared.shipitMethod)));
       })
       .then(function() {
         shipit.emit('sharedDirsCreated');
