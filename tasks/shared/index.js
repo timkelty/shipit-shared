@@ -8,10 +8,12 @@ var init = require('../../lib/init');
 module.exports = function(gruntOrShipit) {
   var shipit = utils.getShipit(gruntOrShipit);
   require('./create-dirs')(gruntOrShipit);
+  require('./set-permissions')(gruntOrShipit);
   require('./link')(gruntOrShipit);
 
   utils.registerTask(gruntOrShipit, 'shared', [
     'shared:create-dirs',
+    'shared:set-permissions',
     'shared:link',
     'shared:end',
   ]);
