@@ -140,10 +140,11 @@ Set to `false` to prevent task from listening to any events.
 
 ## Events
 - `shared`
-  + `shared:create-dirs`
-    * Emit event `sharedDirsCreated`
-  + `shared:link`
-    * `shared:link-dirs`
+  + `shared:prepare`
+    + `shared:create-dirs`
+      * Emit event `sharedDirsCreated`
+    + `shared:link`
+      * `shared:link-dirs`
       - Emit event `sharedFilesDirs`
     * `shared:link-files`
       - Emit event `sharedFilesLinked`
