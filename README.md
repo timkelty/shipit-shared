@@ -130,7 +130,7 @@ The default setting of `false` is a safety precaution to prevent unintentionally
 Type: `String`
 Default: `shared.basePath`
 
-The path that will serve as the source for your symlink. This is usually the same as `shared.basePath`, however it can [necessary to set this in a `chroot` environment](https://github.com/timkelty/shipit-shared/issues/7).
+The path that will serve as the source for your symlink. This is usually the same as `shared.basePath`, however it can be [necessary to set this in a `chroot` environment](https://github.com/timkelty/shipit-shared/issues/7).
 
 ### `shared.triggerEvent`
 Type: `String`, `Boolean`
