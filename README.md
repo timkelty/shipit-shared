@@ -1,5 +1,7 @@
 # shipit-shared
 
+[![Build Status](https://travis-ci.org/timkelty/shipit-shared.svg)](https://travis-ci.org/timkelty/shipit-shared)
+
 A set of tasks for [Shipit](https://github.com/shipitjs/shipit) used for symlinking persistent (un-sourced) files and directories on deploy.
 
 Based on the concept of `linked_files`/`linked_dirs` from [Capistrano](http://capistranorb.com/documentation/getting-started/configuration/)
