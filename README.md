@@ -1,5 +1,7 @@
 # shipit-shared
 
+[![Join the chat at https://gitter.im/timkelty/shipit-shared](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/timkelty/shipit-shared?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 [![Build Status](https://travis-ci.org/timkelty/shipit-shared.svg)](https://travis-ci.org/timkelty/shipit-shared)
 
 A set of tasks for [Shipit](https://github.com/shipitjs/shipit) used for symlinking persistent (un-sourced) files and directories on deploy.
