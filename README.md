@@ -7,7 +7,7 @@ Based on the concept of `linked_files`/`linked_dirs` from [Capistrano](http://ca
 **Features:**
 
 - By default, the `shared` task is triggered on the `updated` event from [shipit-deploy](https://github.com/shipitjs/shipit-deploy)
-- All neccesary directories are always created for you, whether you are linking a file or a directory.
+- All necessary directories are always created for you, whether you are linking a file or a directory.
 - Optionally set permissions on files.
 - Works via [shipit-cli](https://github.com/shipitjs/shipit) and [grunt-shipit](https://github.com/shipitjs/grunt-shipit)
 
@@ -62,7 +62,7 @@ To trigger on the deploy `published` event, you can simply deploy:
 shipit staging deploy
 ```
 
-Or you can run the tasks separatly :
+Or you can run the tasks separately :
 
 ```
 shipit staging shared
@@ -138,18 +138,22 @@ Default: `updated`
 
 Trigger `shared` task on given event name.
 Set to `false` to prevent task from listening to any events.
+(note: Some part of shipit-shared *besides initConfig* needs to be run before it can listen for events)
 
 ## Events
 - `shared`
   + `shared:prepare`
     + `shared:create-dirs`
       * Emit event `sharedDirsCreated`
-    + `shared:link`
-      * `shared:link-dirs`
-      - Emit event `sharedFilesDirs`
-    * `shared:link-files`
-      - Emit event `sharedFilesLinked`
+    + `shared:set-permissions`
+      * Emit event `sharedPermissionsSet`
+  + `shared:link`
+    + `shared:link-dirs`
+      * Emit event `sharedFilesDirs`
+    + `shared:link-files`
+      * Emit event `sharedFilesLinked`
   + `shared:end`
+    * Emit event `sharedEnd`
 
 ## License
 

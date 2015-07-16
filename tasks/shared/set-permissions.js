@@ -4,7 +4,7 @@ var util = require('util');
 var init = require('../../lib/init');
 var mapPromise = require('../../lib/map-promise');
 var Promise = require('bluebird');
-var path = require('path');
+var path = require('path2/posix');
 var _ = require('lodash');
 
 /**
