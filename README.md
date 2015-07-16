@@ -3,8 +3,8 @@
 [![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/timkelty/shipit-shared?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 [![Build Status](https://travis-ci.org/timkelty/shipit-shared.svg)](https://travis-ci.org/timkelty/shipit-shared)
-[![Dependency Status](https://david-dm.org/timkelty/shipit-shared.svg)](https://david-dm.org/timkelty/shipit-shared)
-[![devDependency Status](https://david-dm.org/timkelty/shipit-shared/dev-status.svg)](https://david-dm.org/timkelty/shipit-shared#info=devDependencies)
+[![Dependency Status](https://david-dm.org/timkelty/shipit-shared.svg?theme=shields.io)](https://david-dm.org/timkelty/shipit-shared)
+[![devDependency Status](https://david-dm.org/timkelty/shipit-shared/dev-status.svg?theme=shields.io)](https://david-dm.org/timkelty/shipit-shared#info=devDependencies)
 
 A set of tasks for [Shipit](https://github.com/shipitjs/shipit) used for symlinking persistent (un-sourced) files and directories on deploy.
 
