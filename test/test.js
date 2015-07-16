@@ -6,7 +6,7 @@ require('sinon-as-promised');
 var sinonchai = require('sinon-chai');
 var expect = require('chai').use(require('sinon-chai')).expect;
 var Shipit = require('shipit-cli');
-
+var shipit; //local-to-test temporary variable
 var remoteStub;
 
 describe('Shipit-Shared', function () {
