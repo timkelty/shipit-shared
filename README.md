@@ -1,5 +1,7 @@
 # shipit-shared
 
+[![Join the chat at https://gitter.im/timkelty/shipit-shared](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/timkelty/shipit-shared?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 [![Build Status](https://travis-ci.org/timkelty/shipit-shared.svg)](https://travis-ci.org/timkelty/shipit-shared)
 [![Dependency Status](https://david-dm.org/timkelty/shipit-shared.svg)](https://david-dm.org/timkelty/shipit-shared)
 [![devDependency Status](https://david-dm.org/timkelty/shipit-shared/dev-status.svg)](https://david-dm.org/timkelty/shipit-shared#info=devDependencies)
