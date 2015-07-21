@@ -48,7 +48,6 @@
     "sprintf-js": "^1.0.2"
   },
   "gitHead": "9ce856f7351cb5f33f4c4f742d82cf5dcfba5032",
-  "readme": "ERROR: No README data found!",
   "_id": "shipit-shared@1.0.0",
   "_shasum": "311a7992a787f77db2e48c09119bdce043ac8df2",
   "_from": "shipit-shared@>=1.0.0 <2.0.0"
