@@ -35,7 +35,7 @@ module.exports = function(gruntOrShipit) {
 
       return Promise.resolve(item.overwrite ? item.overwrite : check())
       .then(function() {
-        var cmd = sprintf('if ( ! [ -e "%(source)s" ] ); then cp "%(target)s" "%(source)s"; fi', {
+        var cmd = sprintf('if ( ! [ -e "%(source)s" ] ); then cp -r "%(target)s" "%(source)s"; fi', {
           source: source,
           target: target
         });
