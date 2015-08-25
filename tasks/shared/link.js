@@ -41,7 +41,7 @@ module.exports = function(gruntOrShipit) {
 
       // If symlink source does not exist in shared, copy from current
       .then(function() {
-        var cmd = sprintf('if ( ! [ -e "%(source)s" ] ); then cp -r "%(target)s" "%(source)s"; fi', {
+        var cmd = sprintf('if ( ! [ -e "%(source)s" ] && [ -e "%(target)s" ] && ! [ -h "%(target)s" ] ); then cp -r "%(target)s" "%(source)s"; fi', {
           source: source,
           target: target
         });

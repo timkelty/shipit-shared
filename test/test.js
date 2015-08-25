@@ -11,8 +11,9 @@ var remoteStub;
 
 describe('Shipit-Shared', function () {
   describe('Worker functions', function () {
-    //Create new shipit instance per-test,
-    //these bits can and will be modified if needed to suit test
+
+    // Create new shipit instance per-test,
+    // these bits can and will be modified if needed to suit test
     beforeEach(function () {
       shipit = new Shipit({
         environment: 'test',
@@ -77,9 +78,9 @@ describe('Shipit-Shared', function () {
       shipit.start('shared:link:dirs', function (err) {
         if (err) throw err;
         expect(shipit.remote).calledWith('if ( [ -e "/tmplocal/deploy/releases/7357/db" ] && ! [ -h "/tmplocal/deploy/releases/7357/db" ] ); then echo false; fi');
-        expect(shipit.remote).calledWith('if ( ! [ -e "/tmplocal/deploy/shared/storage" ] ); then cp -r "/tmplocal/deploy/releases/7357/storage" "/tmplocal/deploy/shared/storage"; fi');
+        expect(shipit.remote).calledWith('if ( ! [ -e "/tmplocal/deploy/shared/storage" ] && [ -e "/tmplocal/deploy/releases/7357/storage" ] && ! [ -h "/tmplocal/deploy/releases/7357/storage" ] ); then cp -r "/tmplocal/deploy/releases/7357/storage" "/tmplocal/deploy/shared/storage"; fi');
         expect(shipit.remote).calledWith('if ( ! [ -h "/tmplocal/deploy/releases/7357/storage" ] ); then rm -rf "/tmplocal/deploy/releases/7357/storage" 2> /dev/null; ln -s "/tmplocal/deploy/shared/storage" "/tmplocal/deploy/releases/7357/storage"; fi');
-        expect(shipit.remote).calledWith('if ( ! [ -e "/tmplocal/deploy/shared/db" ] ); then cp -r "/tmplocal/deploy/releases/7357/db" "/tmplocal/deploy/shared/db"; fi');
+        expect(shipit.remote).calledWith('if ( ! [ -e "/tmplocal/deploy/shared/db" ] && [ -e "/tmplocal/deploy/releases/7357/db" ] && ! [ -h "/tmplocal/deploy/releases/7357/db" ] ); then cp -r "/tmplocal/deploy/releases/7357/db" "/tmplocal/deploy/shared/db"; fi');
         expect(shipit.remote).calledWith('if ( ! [ -h "/tmplocal/deploy/releases/7357/db" ] ); then rm -rf "/tmplocal/deploy/releases/7357/db" 2> /dev/null; ln -s "/tmplocal/deploy/shared/db" "/tmplocal/deploy/releases/7357/db"; fi');
         expect(remoteStub.callCount).to.equal(5);
         done();
@@ -90,9 +91,9 @@ describe('Shipit-Shared', function () {
       shipit.start('shared:link:files', function (err) {
         if (err) throw err;
         expect(shipit.remote).calledWith('if ( [ -e "/tmplocal/deploy/releases/7357/config/database.yml" ] && ! [ -h "/tmplocal/deploy/releases/7357/config/database.yml" ] ); then echo false; fi');
-        expect(shipit.remote).calledWith('if ( ! [ -e "/tmplocal/deploy/shared/config/database.yml" ] ); then cp -r "/tmplocal/deploy/releases/7357/config/database.yml" "/tmplocal/deploy/shared/config/database.yml"; fi');
+        expect(shipit.remote).calledWith('if ( ! [ -e "/tmplocal/deploy/shared/config/database.yml" ] && [ -e "/tmplocal/deploy/releases/7357/config/database.yml" ] && ! [ -h "/tmplocal/deploy/releases/7357/config/database.yml" ] ); then cp -r "/tmplocal/deploy/releases/7357/config/database.yml" "/tmplocal/deploy/shared/config/database.yml"; fi');
         expect(shipit.remote).calledWith('if ( ! [ -h "/tmplocal/deploy/releases/7357/config/database.yml" ] ); then rm -rf "/tmplocal/deploy/releases/7357/config/database.yml" 2> /dev/null; ln -s "/tmplocal/deploy/shared/config/database.yml" "/tmplocal/deploy/releases/7357/config/database.yml"; fi');
-        expect(shipit.remote).calledWith('if ( ! [ -e "/tmplocal/deploy/shared/environment.yml" ] ); then cp -r "/tmplocal/deploy/releases/7357/environment.yml" "/tmplocal/deploy/shared/environment.yml"; fi');
+        expect(shipit.remote).calledWith('if ( ! [ -e "/tmplocal/deploy/shared/environment.yml" ] && [ -e "/tmplocal/deploy/releases/7357/environment.yml" ] && ! [ -h "/tmplocal/deploy/releases/7357/environment.yml" ] ); then cp -r "/tmplocal/deploy/releases/7357/environment.yml" "/tmplocal/deploy/shared/environment.yml"; fi');
         expect(shipit.remote).calledWith('if ( ! [ -h "/tmplocal/deploy/releases/7357/environment.yml" ] ); then rm -rf "/tmplocal/deploy/releases/7357/environment.yml" 2> /dev/null; ln -s "/tmplocal/deploy/shared/environment.yml" "/tmplocal/deploy/releases/7357/environment.yml"; fi');
         expect(remoteStub.callCount).to.equal(5);
         done();
@@ -100,7 +101,8 @@ describe('Shipit-Shared', function () {
     });
 
     it('alternative overwrite flags for shared:link:dirs', function(done) {
-      //quickly flip-flop overwrite flags in config
+
+      // quickly flip-flop overwrite flags in config
       shipit.initConfig({
         test: {
           deployTo: '/tmplocal/deploy',
@@ -120,9 +122,9 @@ describe('Shipit-Shared', function () {
       shipit.start('shared:link:dirs', function (err) {
         if (err) throw err;
         expect(shipit.remote).calledWith('if ( [ -e "/tmplocal/deploy/releases/7357/storage" ] && ! [ -h "/tmplocal/deploy/releases/7357/storage" ] ); then echo false; fi');
-        expect(shipit.remote).calledWith('if ( ! [ -e "/tmplocal/deploy/shared/storage" ] ); then cp -r "/tmplocal/deploy/releases/7357/storage" "/tmplocal/deploy/shared/storage"; fi');
+        expect(shipit.remote).calledWith('if ( ! [ -e "/tmplocal/deploy/shared/storage" ] && [ -e "/tmplocal/deploy/releases/7357/storage" ] && ! [ -h "/tmplocal/deploy/releases/7357/storage" ] ); then cp -r "/tmplocal/deploy/releases/7357/storage" "/tmplocal/deploy/shared/storage"; fi');
         expect(shipit.remote).calledWith('if ( ! [ -h "/tmplocal/deploy/releases/7357/storage" ] ); then rm -rf "/tmplocal/deploy/releases/7357/storage" 2> /dev/null; ln -s "/tmplocal/deploy/shared/storage" "/tmplocal/deploy/releases/7357/storage"; fi');
-        expect(shipit.remote).calledWith('if ( ! [ -e "/tmplocal/deploy/shared/db" ] ); then cp -r "/tmplocal/deploy/releases/7357/db" "/tmplocal/deploy/shared/db"; fi');
+        expect(shipit.remote).calledWith('if ( ! [ -e "/tmplocal/deploy/shared/db" ] && [ -e "/tmplocal/deploy/releases/7357/db" ] && ! [ -h "/tmplocal/deploy/releases/7357/db" ] ); then cp -r "/tmplocal/deploy/releases/7357/db" "/tmplocal/deploy/shared/db"; fi');
         expect(shipit.remote).calledWith('if ( ! [ -h "/tmplocal/deploy/releases/7357/db" ] ); then rm -rf "/tmplocal/deploy/releases/7357/db" 2> /dev/null; ln -s "/tmplocal/deploy/shared/db" "/tmplocal/deploy/releases/7357/db"; fi');
         expect(remoteStub.callCount).to.equal(5);
         done();
@@ -130,7 +132,8 @@ describe('Shipit-Shared', function () {
     });
 
     it('alternative overwrite flags for shared:link:files', function(done) {
-      //quickly flip-flop overwrite flags in config
+
+      // quickly flip-flop overwrite flags in config
       shipit.initConfig({
         test: {
           deployTo: '/tmplocal/deploy',
@@ -150,9 +153,9 @@ describe('Shipit-Shared', function () {
       shipit.start('shared:link:files', function (err) {
         if (err) throw err;
         expect(shipit.remote).calledWith('if ( [ -e "/tmplocal/deploy/releases/7357/environment.yml" ] && ! [ -h "/tmplocal/deploy/releases/7357/environment.yml" ] ); then echo false; fi');
-        expect(shipit.remote).calledWith('if ( ! [ -e "/tmplocal/deploy/shared/config/database.yml" ] ); then cp -r "/tmplocal/deploy/releases/7357/config/database.yml" "/tmplocal/deploy/shared/config/database.yml"; fi');
+        expect(shipit.remote).calledWith('if ( ! [ -e "/tmplocal/deploy/shared/config/database.yml" ] && [ -e "/tmplocal/deploy/releases/7357/config/database.yml" ] && ! [ -h "/tmplocal/deploy/releases/7357/config/database.yml" ] ); then cp -r "/tmplocal/deploy/releases/7357/config/database.yml" "/tmplocal/deploy/shared/config/database.yml"; fi');
         expect(shipit.remote).calledWith('if ( ! [ -h "/tmplocal/deploy/releases/7357/config/database.yml" ] ); then rm -rf "/tmplocal/deploy/releases/7357/config/database.yml" 2> /dev/null; ln -s "/tmplocal/deploy/shared/config/database.yml" "/tmplocal/deploy/releases/7357/config/database.yml"; fi');
-        expect(shipit.remote).calledWith('if ( ! [ -e "/tmplocal/deploy/shared/environment.yml" ] ); then cp -r "/tmplocal/deploy/releases/7357/environment.yml" "/tmplocal/deploy/shared/environment.yml"; fi');
+        expect(shipit.remote).calledWith('if ( ! [ -e "/tmplocal/deploy/shared/environment.yml" ] && [ -e "/tmplocal/deploy/releases/7357/environment.yml" ] && ! [ -h "/tmplocal/deploy/releases/7357/environment.yml" ] ); then cp -r "/tmplocal/deploy/releases/7357/environment.yml" "/tmplocal/deploy/shared/environment.yml"; fi');
         expect(shipit.remote).calledWith('if ( ! [ -h "/tmplocal/deploy/releases/7357/environment.yml" ] ); then rm -rf "/tmplocal/deploy/releases/7357/environment.yml" 2> /dev/null; ln -s "/tmplocal/deploy/shared/environment.yml" "/tmplocal/deploy/releases/7357/environment.yml"; fi');
         expect(remoteStub.callCount).to.equal(5);
         done();
@@ -164,8 +167,9 @@ describe('Shipit-Shared', function () {
     });
   });
   describe('Overall functionality', function () {
-    //Create new shipit instance per-test,
-    //these bits can and will be modified if needed to suit test
+
+    // Create new shipit instance per-test,
+    // these bits can and will be modified if needed to suit test
     beforeEach(function () {
       shipit = new Shipit({
         environment: 'test',
@@ -188,7 +192,7 @@ describe('Shipit-Shared', function () {
             overwrite: true,
             basePath: 'TRANS',
             dirs: [
-              'storage',
+              'storage/',
               {
                 path: 'db',
                 overwrite: false,
