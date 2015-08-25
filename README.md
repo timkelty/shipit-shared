@@ -160,6 +160,10 @@ Set to `false` to prevent task from listening to any events.
   + `shared:end`
     * Emit event `sharedEnd`
 
+## Additional Details, Caveats
+
+If the specified path exists in `current` and _not_ in `shared`, it will be copied to `shared` before the symlink is created.
+
 ## License
 
 MIT
