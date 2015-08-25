@@ -30,6 +30,7 @@
   "devDependencies": {
     "chai": "^3.0.0",
     "mocha": "^2.1.0",
+    "normalize-path": "^1.0.0",
     "shipit-cli": "^1.1.0",
     "sinon": "^1.12.2",
     "sinon-as-promised": "^2.0.3",
