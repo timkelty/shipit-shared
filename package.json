@@ -30,7 +30,6 @@
   "devDependencies": {
     "chai": "^3.0.0",
     "mocha": "^2.1.0",
-    "normalize-path": "^1.0.0",
     "shipit-cli": "^1.1.0",
     "sinon": "^1.12.2",
     "sinon-as-promised": "^2.0.3",
@@ -42,6 +41,7 @@
     "lodash": "^2.4.1",
     "mkdirp": "^0.5.0",
     "moment": "^2.9.0",
+    "normalize-path": "^1.0.0",
     "path-is-absolute": "^1.0.0",
     "path2": "^0.1.0",
     "shipit-deploy": "^2.0.0",
