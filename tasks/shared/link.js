@@ -8,6 +8,10 @@ var _ = require('lodash');
 
 /**
  * Create shared symlinks.
+ *
+ * File test operators:
+ * -e file exists
+ * -h file is a symbolic link
  */
 
 module.exports = function(gruntOrShipit) {
@@ -34,6 +38,8 @@ module.exports = function(gruntOrShipit) {
       };
 
       return Promise.resolve(item.overwrite ? item.overwrite : check())
+
+      // If symlink target is not already a symlink, remove it, then create symlink.
       .then(function() {
         var cmd = sprintf('if ( ! [ -h "%(target)s" ] ); then rm -rf "%(target)s" 2> /dev/null; ln -s "%(source)s" "%(target)s"; fi', {
           source: source,
