@@ -20,7 +20,10 @@ module.exports = function(gruntOrShipit) {
       var filePath = shipit.config.shared.remote ? path.join(shipit.config.shared.basePath, el.path) : el.path;
 
       if (el.chmod) {
-        return shipit[shipit.config.shared.shipitMethod](util.format('chmod %s', el.chmod, filePath));
+        return shipit[shipit.config.shared.shipitMethod](util.format('chmod %s', el.chmod, filePath))
+        .catch(function(e) {
+          console.log(chalk.bold.red('\nError: ' + e.message));
+        });
       }
 
       return false;
