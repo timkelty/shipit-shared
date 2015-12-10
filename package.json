@@ -30,7 +30,7 @@
   "devDependencies": {
     "chai": "^3.0.0",
     "mocha": "^2.1.0",
-    "shipit-cli": "^1.1.0",
+    "shipit-cli": "shipitjs/shipit.git#3d2e16552adc03bd0e4f983b4793aca060bd6218",
     "sinon": "^1.12.2",
     "sinon-as-promised": "^2.0.3",
     "sinon-chai": "^2.6.0"
