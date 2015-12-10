@@ -28,14 +28,14 @@ module.exports = function(gruntOrShipit) {
   });
 
   // Trigger on deploy by default
-  shipit.on('start', function() {
+  shipit.on('init', function() {
     shipit.config.shared = shipit.config.shared || {};
     var event = shipit.config.shared.triggerEvent;
     event = event !== undefined ? event : 'updated';
 
     if (event) {
       shipit.on(event, function() {
-        shipit.start('shared');
+        utils.runTask(gruntOrShipit, 'shared');
       });
     }
   });
