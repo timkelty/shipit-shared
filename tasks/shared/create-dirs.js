@@ -25,14 +25,31 @@ module.exports = function(gruntOrShipit) {
     };
 
     var createDir = function createDir(el) {
+      var successMsg = 'Directory created on %s: %s.';
+      var errorMsg = 'Could not create directory on %s: %s.';
+      var srcPath = path.join(shipit.config.shared.symlinkPath, el.path);
+      var targetPath;
+
       return shipit[shipit.config.shared.shipitMethod](
         util.format('mkdir -p %s', getPathStr(el))
-      ).then(function() {
-
+      )
+      .then(function() {
+        shipit.log(chalk.red(util.format(successMsg, shipit.config.shared.shipitMethod, srcPath)));
+      }, function() {
+        shipit.log(chalk.red(util.format(errorMsg, shipit.config.shared.shipitMethod, srcPath)));
+      })
+      .then(function() {
         if (shipit.config.shared.remote && shipit.releasePath) {
+          targetPath = path.join(shipit.releasePath, el.path);
+
           return shipit.remote(
             util.format('mkdir -p %s', getPathStr(el, shipit.releasePath))
-          );
+          )
+          .then(function() {
+            shipit.log(chalk.red(util.format(successMsg, shipit.config.shared.shipitMethod, targetPath)));
+          }, function() {
+            shipit.log(chalk.red(util.format(errorMsg, shipit.config.shared.shipitMethod, targetPath)));
+          });
         }
 
         return Promise.resolve();
@@ -45,9 +62,6 @@ module.exports = function(gruntOrShipit) {
 
       return mapPromise(shipit.config.shared.dirs, createDir)
       .then(mapPromise(shipit.config.shared.files, createDir))
-      .then(function() {
-        shipit.log(chalk.green(util.format('Shared directories created on %s.', shipit.config.shared.shipitMethod)));
-      })
       .then(function() {
         shipit.emit('sharedDirsCreated');
       });
