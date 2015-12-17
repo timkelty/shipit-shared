@@ -18,7 +18,7 @@ module.exports = function(gruntOrShipit) {
     var method = remote ? 'remote' : 'local';
 
     var getPathStr = function(el, basePath) {
-      basePath = basePath || shipit.config.shared.symlinkPath;
+      basePath = basePath || shipit.config.shared.basePath;
       var filePath = shipit.config.shared.remote ? path.join(basePath, el.path) : el.path;
 
       return el.isFile ? util.format('$(dirname %s)', filePath) : filePath;
@@ -27,7 +27,7 @@ module.exports = function(gruntOrShipit) {
     var createDir = function createDir(el) {
       var successMsg = 'Directory created on %s: %s.';
       var errorMsg = 'Could not create directory on %s: %s.';
-      var srcPath = path.join(shipit.config.shared.symlinkPath, el.path);
+      var srcPath = path.join(shipit.config.shared.basePath, el.path);
       var targetPath;
 
       return shipit[shipit.config.shared.shipitMethod](
