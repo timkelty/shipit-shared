@@ -18,11 +18,11 @@ module.exports = function(gruntOrShipit) {
     var method = remote ? 'remote' : 'local';
 
     var getPathStr = function(el, basePath) {
-      basePath = basePath || shipit.config.shared.basePath;
+      basePath = basePath || shipit.config.shared.symlinkPath;
       var filePath = shipit.config.shared.remote ? path.join(basePath, el.path) : el.path;
 
       return el.isFile ? util.format('$(dirname %s)', filePath) : filePath;
-    }
+    };
 
     var createDir = function createDir(el) {
       return shipit[shipit.config.shared.shipitMethod](
@@ -33,11 +33,11 @@ module.exports = function(gruntOrShipit) {
           return shipit.remote(
             util.format('mkdir -p %s', getPathStr(el, shipit.releasePath))
           );
-        };
+        }
 
         return Promise.resolve();
       });
-    }
+    };
 
     return init(shipit)
     .then(function(shipit) {
