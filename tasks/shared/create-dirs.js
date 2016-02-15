@@ -34,7 +34,7 @@ module.exports = function(gruntOrShipit) {
         util.format('mkdir -p %s', getPathStr(el))
       )
       .then(function() {
-        shipit.log(chalk.red(util.format(successMsg, shipit.config.shared.shipitMethod, srcPath)));
+        shipit.log(chalk.green(util.format(successMsg, shipit.config.shared.shipitMethod, srcPath)));
       }, function() {
         shipit.log(chalk.red(util.format(errorMsg, shipit.config.shared.shipitMethod, srcPath)));
       })
@@ -46,7 +46,7 @@ module.exports = function(gruntOrShipit) {
             util.format('mkdir -p %s', getPathStr(el, shipit.releasePath))
           )
           .then(function() {
-            shipit.log(chalk.red(util.format(successMsg, shipit.config.shared.shipitMethod, targetPath)));
+            shipit.log(chalk.green(util.format(successMsg, shipit.config.shared.shipitMethod, targetPath)));
           }, function() {
             shipit.log(chalk.red(util.format(errorMsg, shipit.config.shared.shipitMethod, targetPath)));
           });
