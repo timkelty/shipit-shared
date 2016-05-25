@@ -33,7 +33,9 @@ module.exports = function(gruntOrShipit) {
       shipit.log(util.format('Setting permissions on %s.', shipit.config.shared.shipitMethod));
 
       return mapPromise(shipit.config.shared.dirs, setPermissions)
-      .then(mapPromise(shipit.config.shared.files, setPermissions))
+      .then(function() {
+        return mapPromise(shipit.config.shared.files, setPermissions);
+      })
       .then(function() {
         shipit.log(chalk.green(util.format('Permissions set on %s.', shipit.config.shared.shipitMethod)));
       })
