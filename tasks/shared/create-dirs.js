@@ -61,7 +61,9 @@ module.exports = function(gruntOrShipit) {
       shipit.log(util.format('Creating shared directories on %s.', shipit.config.shared.shipitMethod));
 
       return mapPromise(shipit.config.shared.dirs, createDir)
-      .then(mapPromise(shipit.config.shared.files, createDir))
+      .then(function() {
+        return mapPromise(shipit.config.shared.files, createDir);
+      })
       .then(function() {
         shipit.emit('sharedDirsCreated');
       });
